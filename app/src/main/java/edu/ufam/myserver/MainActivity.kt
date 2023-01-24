@@ -18,7 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import edu.ufam.myserver.databinding.ActivityMainBinding
-import edu.ufam.myserver.ui.login.LoginActivity
+import edu.ufam.myserver.ui.login_logout.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 

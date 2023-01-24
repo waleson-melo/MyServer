@@ -1,4 +1,4 @@
-package edu.ufam.myserver.ui.login
+package edu.ufam.myserver.ui.login_logout
 
 import android.content.Intent
 import android.graphics.Color
