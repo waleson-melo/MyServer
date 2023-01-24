@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="edu.ufam.myserver.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_server"
+        android:name="edu.ufam.myserver.ui.server.ServerFragment"
+        android:label="@string/menu_server"
+        tools:layout="@layout/fragment_server" />
 
     <fragment
         android:id="@+id/nav_slideshow"
