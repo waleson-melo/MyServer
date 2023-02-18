@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import edu.ufam.myserver.databinding.FragmentServerBinding
+import androidx.lifecycle.ViewModelProvider
+import edu.ufam.myserver.databinding.FragmentGalleryBinding
 
 class ServerFragment : Fragment() {
 
-    private var _binding: FragmentServerBinding? = null
+    private var _binding: FragmentGalleryBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -17,11 +22,16 @@ class ServerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val serverViewModel =
+            ViewModelProvider(this).get(ServerViewModel::class.java)
 
-        _binding = FragmentServerBinding.inflate(inflater, container, false)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
+        val textView: TextView = binding.textGallery
+        serverViewModel.text.observe(viewLifecycleOwner) {
+            textView.text = it
+        }
         return root
     }
 

@@ -1,19 +1,24 @@
 package edu.ufam.myserver.ui.login_logout
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.*
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import edu.ufam.myserver.MainActivity
+import edu.ufam.myserver.R
 import edu.ufam.myserver.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLoginBinding
     private val auth = FirebaseAuth.getInstance()
 
@@ -33,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }.addOnFailureListener { exception ->
                     val messageError = when (exception) {
-                        is FirebaseAuthEmailException -> "Digite um email válido!"
                         is FirebaseAuthInvalidCredentialsException -> "Login ou senha inválida!"
                         is FirebaseNetworkException -> "Sem conexão com a internet!"
                         else -> "Erro ao entrar!"
@@ -42,37 +46,14 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
-        binding.btnRegister.setOnClickListener { view ->
-            val email = binding.inpEmail.text.toString()
-            val password = binding.inpPassword.text.toString()
+    override fun onStart() {
+        super.onStart()
 
-            if (!emptyInput(view, email, password)) {
-                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { create ->
-                    if (create.isSuccessful) {
-                        snackBarMessage(view, Color.BLUE , "Sucesso ao registrar usuário.")
-
-                        val initServerMap = hashMapOf(
-                            "name" to "Server",
-                            "current_temperature" to 0.00
-                        )
-                        FirebaseFirestore.getInstance().collection(email).document("Server")
-                            .set(initServerMap)
-                            .addOnCompleteListener {
-                                Log.d("db", "Sucesso ao salvar dados do servidor")
-                            }
-                    }
-                }.addOnFailureListener { exception ->
-                    val messageError = when (exception) {
-                        is FirebaseAuthWeakPasswordException -> "Digite uma senha com no mínimo 6 caracteres!"
-                        is FirebaseAuthInvalidCredentialsException -> "Digite um email válido!"
-                        is FirebaseAuthUserCollisionException -> "Esta conta já possui registro!"
-                        is FirebaseNetworkException -> "Sem conexão com a internet!"
-                        else -> "Erro ao cadastrar usuário!"
-                    }
-                    snackBarMessage(view, Color.RED, messageError)
-                }
-            }
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            navigateToMainActivity()
         }
     }
 

@@ -9,21 +9,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyServer"
+        android:theme="@style/Theme.MyServerVF"
         tools:targetApi="31">
         <activity
-            android:name=".ui.login_logout.LoginActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MyServer.NoActionBar" />
-        <activity
             android:name=".ui.login_logout.LogoutActivity"
-            android:exported="true"
-            android:theme="@style/Theme.MyServer.NoActionBar" />
+            android:exported="false" />
+        <activity
+            android:name=".ui.login_logout.LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MyServer.NoActionBar">
+            android:theme="@style/Theme.MyServerVF.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
